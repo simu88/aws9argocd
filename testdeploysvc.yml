@@ -19,7 +19,7 @@ kind: Deployment
 metadata:
   name: aws9-deploy-blog
 spec:
-  replicas: 1
+  replicas: 10
   selector:
     matchLabels:
       app: blog
