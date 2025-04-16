@@ -1,0 +1,40 @@
+# 테스트 svc
+apiVersion: v1
+kind: Service
+metadata:
+  name: aws9-svc-blo1
+spec:
+  selector:
+    app: blog
+  ports:
+  - name: aws9-port-blog
+    port: 80         # 변경가능? cluster-ip 의 포트 번호(type 없으면 기본은 cluster-ip )
+    protocol: TCP
+    targetPort: 80  
+
+---
+# 테스트 deploy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aws9-deploy-blog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog
+  template:
+    metadata:
+      labels:
+        app: blog
+    spec:
+      containers:
+      - name: aws9-ctn-blog
+        image: kimsimu/aws9:green
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "32Mi"
+          limits:
+            cpu: "500m"
+            memory: "64Mi"
